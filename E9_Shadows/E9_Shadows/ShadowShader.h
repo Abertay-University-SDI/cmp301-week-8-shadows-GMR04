@@ -17,22 +17,15 @@ private:
 		XMMATRIX world;
 		XMMATRIX view;
 		XMMATRIX projection;
-		XMMATRIX lightView;
-		XMMATRIX lightProjection;
-		XMMATRIX light2View;
-		XMMATRIX light2Projection;
+		XMMATRIX lightView[2];
+		XMMATRIX lightProjection[2];
 	};
 
 	struct LightBufferType
 	{
-		XMFLOAT4 ambient;
-		XMFLOAT4 diffuse;
-		XMFLOAT3 direction;
-		float padding;
-		XMFLOAT4 ambient2;
-		XMFLOAT4 diffuse2;
-		XMFLOAT3 direction2;
-		float padding2;
+		XMFLOAT4 ambient[2];
+		XMFLOAT4 diffuse[2];
+		XMFLOAT4 direction[2];
 	};
 
 public:

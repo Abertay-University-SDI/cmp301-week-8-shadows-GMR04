@@ -39,8 +39,8 @@ void App1::init(HINSTANCE hinstance, HWND hwnd, int screenWidth, int screenHeigh
 
 		// Configure directional light
 		lights[i] = new Light();
-		lights[i]->setAmbientColour(0.3f, 0.3f, 0.3f, 1.0f);
-		lights[i]->setDiffuseColour(1.0f, 1.0f, 1.0f, 1.0f);
+		lights[i]->setAmbientColour(0.1f, 0.1f, 0.1f, 1.0f);
+		lights[i]->setDiffuseColour(0.5f, 0.5f, 0.5f, 1.0f);
 		lights[i]->generateOrthoMatrix((float)sceneWidth, (float)sceneHeight, 0.1f, 100.f);
 	}
 }

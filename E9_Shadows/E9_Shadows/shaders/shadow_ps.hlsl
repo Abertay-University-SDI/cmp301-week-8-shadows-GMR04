@@ -7,23 +7,17 @@ SamplerState shadowSampler : register(s1);
 
 cbuffer LightBuffer : register(b0)
 {
-    float4 ambient;
-    float4 diffuse;
-    float3 direction;
-    float padding;
-    float4 ambient2;
-    float4 diffuse2;
-    float3 direction2;
-    float padding2;
+    float4 ambient[2];
+    float4 diffuse[2];
+    float4 direction[2];
 };
 
 struct InputType
 {
     float4 position : SV_POSITION;
     float2 tex : TEXCOORD0;
-	float3 normal : NORMAL;
-    float4 lightViewPos : TEXCOORD1;
-    float4 light2ViewPos : TEXCOORD2;
+    float3 normal : NORMAL;
+    float4 lightViewPos[2] : TEXCOORD1;
 };
 
 // Calculate lighting intensity based on direction and normal. Combine with light colour.
@@ -71,24 +65,30 @@ float2 getProjectiveCoords(float4 lightViewPosition)
 
 float4 main(InputType input) : SV_TARGET
 {
+    int lightCount = 2;
     float shadowMapBias = 0.005f;
     float4 colour = float4(0.f, 0.f, 0.f, 1.f);
     float4 textureColour = shaderTexture.Sample(diffuseSampler, input.tex);
 
 	// Calculate the projected texture coordinates.
-    float2 pTexCoord = getProjectiveCoords(input.light2ViewPos);
-	
-    // Shadow test. Is or isn't in shadow
-    if (hasDepthData(pTexCoord))
+    for (int i = 0; i < lightCount; i++)
     {
-        // Has depth map data
-        if (!isInShadow(depthMapTexture[1], pTexCoord, input.light2ViewPos, shadowMapBias))
+        float4 lightVP = i == 1 ? input.lightViewPos[i] : input.lightViewPos[i];
+        float2 pTexCoord = getProjectiveCoords(lightVP);
+	
+        // Shadow test. Is or isn't in shadow
+        if (hasDepthData(pTexCoord))
         {
-            // is NOT in shadow, therefore light
-            colour = calculateLighting(-direction, input.normal, diffuse);
+        // Has depth map data
+            if (!isInShadow(depthMapTexture[i], pTexCoord, lightVP, shadowMapBias))
+            {
+                // is NOT in shadow, therefore light
+                colour += calculateLighting(-direction[i].rgb, input.normal, diffuse[i]);
+            }
         }
     }
     
-    colour = saturate(colour + ambient);
+    for (int i = 0; i < lightCount; i++)
+        colour += ambient[i];
     return saturate(colour) * textureColour;
 }
