@@ -118,6 +118,7 @@ void ShadowShader::setShaderParameters(ID3D11DeviceContext* deviceContext, const
 		dataPtr->lightView[i] = tLightViewMatrix;
 		dataPtr->lightProjection[i] = tLightProjectionMatrix;
 	}
+	dataPtr->lightCount = 2;
 	deviceContext->Unmap(matrixBuffer, 0);
 	deviceContext->VSSetConstantBuffers(0, 1, &matrixBuffer);
 
@@ -132,6 +133,7 @@ void ShadowShader::setShaderParameters(ID3D11DeviceContext* deviceContext, const
 		XMFLOAT3 dir = lights[i]->getDirection();
 		lightPtr->direction[i] = XMFLOAT4(dir.x, dir.y, dir.z, 0.0f);
 	}
+	lightPtr->lightCount = 2;
 	deviceContext->Unmap(lightBuffer, 0);
 	deviceContext->PSSetConstantBuffers(0, 1, &lightBuffer);	
 

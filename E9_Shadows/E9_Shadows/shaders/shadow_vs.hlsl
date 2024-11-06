@@ -6,6 +6,8 @@ cbuffer MatrixBuffer : register(b0)
 	matrix projectionMatrix;
     matrix lightViewMatrix[2];
     matrix lightProjectionMatrix[2];
+    float lightCount;
+    float3 padding;
 };
 
 struct InputType
@@ -27,14 +29,13 @@ struct OutputType
 OutputType main(InputType input)
 {
     OutputType output;
-    int lightCount = 2;
 
 	// Calculate the position of the vertex against the world, view, and projection matrices.
     output.position = mul(input.position, worldMatrix);
     output.position = mul(output.position, viewMatrix);
     output.position = mul(output.position, projectionMatrix);
     
-	// Calculate the position of the vertice as viewed by the light sources.
+	// Calculate the position of the vertices as viewed by each light source
     for (int i = 0; i < lightCount; i++)
     {
         output.lightViewPos[i] = mul(input.position, worldMatrix);

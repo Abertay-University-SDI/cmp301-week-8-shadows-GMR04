@@ -10,6 +10,8 @@ cbuffer LightBuffer : register(b0)
     float4 ambient[2];
     float4 diffuse[2];
     float4 direction[2];
+    float lightCount;
+    float3 padding;
 };
 
 struct InputType
@@ -28,7 +30,7 @@ float4 calculateLighting(float3 lightDirection, float3 normal, float4 diffuse)
     return colour;
 }
 
-// Is the gemoetry in our shadow map
+// Is the geometry in our shadow map
 bool hasDepthData(float2 uv)
 {
     if (uv.x < 0.f || uv.x > 1.f || uv.y < 0.f || uv.y > 1.f)
@@ -65,7 +67,6 @@ float2 getProjectiveCoords(float4 lightViewPosition)
 
 float4 main(InputType input) : SV_TARGET
 {
-    int lightCount = 2;
     float shadowMapBias = 0.005f;
     float4 colour = float4(0.f, 0.f, 0.f, 1.f);
     float4 textureColour = shaderTexture.Sample(diffuseSampler, input.tex);
@@ -88,6 +89,7 @@ float4 main(InputType input) : SV_TARGET
         }
     }
     
+    // Add ambient colour from each light
     for (int i = 0; i < lightCount; i++)
         colour += ambient[i];
     return saturate(colour) * textureColour;

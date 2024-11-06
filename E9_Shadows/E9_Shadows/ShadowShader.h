@@ -19,6 +19,8 @@ private:
 		XMMATRIX projection;
 		XMMATRIX lightView[2];
 		XMMATRIX lightProjection[2];
+		float lightCount;
+		XMFLOAT3 padding;
 	};
 
 	struct LightBufferType
@@ -26,6 +28,8 @@ private:
 		XMFLOAT4 ambient[2];
 		XMFLOAT4 diffuse[2];
 		XMFLOAT4 direction[2];
+		float lightCount;
+		XMFLOAT3 padding;
 	};
 
 public:
