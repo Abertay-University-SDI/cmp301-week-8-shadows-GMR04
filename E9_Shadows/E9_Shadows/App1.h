@@ -44,9 +44,9 @@ private:
 	ShadowMap** shadowMaps;
 	
 	XMFLOAT3 shadow1Pos = XMFLOAT3(0.0f, 0.0f, -20.0f);
-	XMFLOAT3 shadow1Dir = XMFLOAT3(0.0f, -0.6f, 0.7f);
+	XMFLOAT3 shadow1Dir = XMFLOAT3(0.0f, -1.0f, 1.0f);
 	XMFLOAT3 shadow2Pos = XMFLOAT3(0.0f, 0.0f, 40.0f);
-	XMFLOAT3 shadow2Dir = XMFLOAT3(0.0f, -0.6f, -0.7f);
+	XMFLOAT3 shadow2Dir = XMFLOAT3(0.0f, -1.0f, -1.0f);
 };
 
 #endif
