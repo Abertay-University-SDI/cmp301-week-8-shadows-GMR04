@@ -29,10 +29,6 @@ private:
 		XMFLOAT4 diffuse;
 		XMFLOAT3 direction;
 		float padding;
-		XMFLOAT4 ambient2;
-		XMFLOAT4 diffuse2;
-		XMFLOAT3 direction2;
-		float padding2;
 	};
 
 public:

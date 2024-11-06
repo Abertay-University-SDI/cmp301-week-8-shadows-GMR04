@@ -130,10 +130,6 @@ void ShadowShader::setShaderParameters(ID3D11DeviceContext* deviceContext, const
 	lightPtr->diffuse = lights[0]->getDiffuseColour();
 	lightPtr->direction = lights[0]->getDirection();
 	lightPtr->padding = 0.f;
-	lightPtr->ambient2 = lights[1]->getAmbientColour();
-	lightPtr->diffuse2 = lights[1]->getDiffuseColour();
-	lightPtr->direction2 = lights[1]->getDirection();
-	lightPtr->padding2 = 0.f;
 	deviceContext->Unmap(lightBuffer, 0);
 	deviceContext->PSSetConstantBuffers(0, 1, &lightBuffer);	
 

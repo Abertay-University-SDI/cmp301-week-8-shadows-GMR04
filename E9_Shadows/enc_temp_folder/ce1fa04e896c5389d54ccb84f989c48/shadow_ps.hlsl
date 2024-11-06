@@ -7,14 +7,9 @@ SamplerState shadowSampler : register(s1);
 
 cbuffer LightBuffer : register(b0)
 {
-    float4 ambient;
-    float4 diffuse;
-    float3 direction;
-    float padding;
-    float4 ambient2;
-    float4 diffuse2;
-    float3 direction2;
-    float padding2;
+	float4 ambient;
+	float4 diffuse;
+	float3 direction;
 };
 
 struct InputType
