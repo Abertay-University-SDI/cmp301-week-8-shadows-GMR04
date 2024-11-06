@@ -1,6 +1,6 @@
 
 Texture2D shaderTexture : register(t0);
-Texture2D depthMapTexture : register(t1);
+Texture2D depthMapTexture[2] : register(t1);
 
 SamplerState diffuseSampler  : register(s0);
 SamplerState shadowSampler : register(s1);
@@ -18,6 +18,7 @@ struct InputType
     float2 tex : TEXCOORD0;
 	float3 normal : NORMAL;
     float4 lightViewPos : TEXCOORD1;
+    float4 light2ViewPos : TEXCOORD2;
 };
 
 // Calculate lighting intensity based on direction and normal. Combine with light colour.
@@ -70,13 +71,13 @@ float4 main(InputType input) : SV_TARGET
     float4 textureColour = shaderTexture.Sample(diffuseSampler, input.tex);
 
 	// Calculate the projected texture coordinates.
-    float2 pTexCoord = getProjectiveCoords(input.lightViewPos);
+    float2 pTexCoord = getProjectiveCoords(input.light2ViewPos);
 	
     // Shadow test. Is or isn't in shadow
     if (hasDepthData(pTexCoord))
     {
         // Has depth map data
-        if (!isInShadow(depthMapTexture, pTexCoord, input.lightViewPos, shadowMapBias))
+        if (!isInShadow(depthMapTexture[0], pTexCoord, input.light2ViewPos, shadowMapBias))
         {
             // is NOT in shadow, therefore light
             colour = calculateLighting(-direction, input.normal, diffuse);

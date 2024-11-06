@@ -19,6 +19,8 @@ private:
 		XMMATRIX projection;
 		XMMATRIX lightView;
 		XMMATRIX lightProjection;
+		XMMATRIX light2View;
+		XMMATRIX light2Projection;
 	};
 
 	struct LightBufferType
@@ -34,7 +36,7 @@ public:
 	ShadowShader(ID3D11Device* device, HWND hwnd);
 	~ShadowShader();
 
-	void setShaderParameters(ID3D11DeviceContext* deviceContext, const XMMATRIX &world, const XMMATRIX &view, const XMMATRIX &projection, ID3D11ShaderResourceView* texture, ID3D11ShaderResourceView*depthMap, Light* light);
+	void setShaderParameters(ID3D11DeviceContext* deviceContext, const XMMATRIX &world, const XMMATRIX &view, const XMMATRIX &projection, ID3D11ShaderResourceView* texture, ShadowMap** shadowMaps, Light** lights, int lightCount);
 
 private:
 	void initShader(const wchar_t* vs, const wchar_t* ps);
